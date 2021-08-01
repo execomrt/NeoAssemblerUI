@@ -1,0 +1,131 @@
+﻿<Window x:Class="NeoAssemblerUI.MainWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeoAssemblerUI"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        Style="{DynamicResource DarkWindowStyle}"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Neo Assembler UI" Height="398" Width="1000">
+
+
+    <Window.InputBindings>
+        <KeyBinding Key="F5"
+                Command="{Binding BuildCommand}"                    
+                />
+        <KeyBinding Key="N" Modifiers="Ctrl"
+                Command="{Binding NewCommand}"
+                />
+        <KeyBinding Key="O" Modifiers="Ctrl"
+                Command="{Binding OpenCommand}"
+                />
+        <KeyBinding Key="S" Modifiers="Ctrl"
+                Command="{Binding SaveCommand}"
+                />
+        <KeyBinding Key="X" Modifiers="Ctrl"
+                Command="{Binding QuitCommand}"
+                />
+        <KeyBinding Key="I" Modifiers="Ctrl"
+                Command="{Binding ConfigureCommand}"
+                />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="2" x:Name="m_List"  AllowDrop="True" Drop="OnFileDrop" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                  ItemsSource="{Binding Path=Files}" >
+            <ListView.View >
+                <GridView >
+                    <GridViewColumn Header="#" Width="60"  DisplayMemberBinding="{Binding Path=Index}"/>                    
+                    <GridViewColumn Header="Name" Width="320" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Size" Width="120"  DisplayMemberBinding="{Binding Path=LengthHeader}"/>
+                    
+                </GridView >
+            </ListView.View>
+        </ListView>
+    
+    <ToolBarTray Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ToolBar Name="toolStrip1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="ToolBar_Loaded">
+                <Button Name= "toolStripButton21" Command="{Binding ConfigureCommand}" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Resources/baseline_build_white_18dp.png" Height="24" />
+                        <TextBlock>Setup</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name= "toolStripButton2" Command="{Binding BuildCommand}" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="Resources/baseline_play_circle_outline_white_18dp.png" Height="24" />
+                    <TextBlock>Pack</TextBlock>
+                </StackPanel>
+            </Button>
+
+                <Button Name= "toolStripButton23" Command="{Binding NewCommand}" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Resources/baseline_delete_white_18dp.png" Height="24" />
+                        <TextBlock>New</TextBlock>
+                    </StackPanel>
+                </Button>
+
+
+            </ToolBar>
+    </ToolBarTray>
+    <StatusBar Background="{DynamicResource MaterialDesignPaper}" Grid.Row="4" Name="statusStrip1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+        <StatusBar.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ItemsPanelTemplate>
+        </StatusBar.ItemsPanel>
+        <StatusBarItem>
+            <TextBlock Foreground="{DynamicResource MaterialDesignBody}" Name="m_StatusShort" ></TextBlock>
+        </StatusBarItem>
+        <Separator Grid.Column="1" />
+        <StatusBarItem Grid.Column="2">
+            <TextBlock Foreground="{DynamicResource MaterialDesignBody}" Name="m_StatusLong"  />
+        </StatusBarItem>
+        <Separator Grid.Column="3" />
+        <StatusBarItem Grid.Column="4">
+            <ProgressBar Name="m_ProgressBar" Value="0" Width="90" Height="16" />
+        </StatusBarItem>
+    </StatusBar>
+    <Menu Grid.Row="0"  Name="mainMenu1" TabIndex="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <MenuItem Header="File" Name="toolStripMenuItem3" >
+            <MenuItem Header="New" InputGestureText="Ctrl+N" Command="{Binding NewCommand}" Name="toolStripMenuItem4" ></MenuItem>
+                <MenuItem Header="Open" InputGestureText="Ctrl+O" Command="{Binding OpenCommand}" Name="toolStripMenuItem5" ></MenuItem>
+                <MenuItem Header="Close" InputGestureText="Ctrl+C" Command="{Binding CloseCommand}" Name="toolStripMenuItem6" ></MenuItem>
+            <Separator/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommmand}" Name="toolStripMenuItem7" ></MenuItem>
+         
+            <Separator/>
+                <MenuItem Header="Quit" InputGestureText="Ctrl+Q" Command="{Binding QuitCommand}" Name="toolStripMenuItem10" ></MenuItem>
+        </MenuItem>
+      
+        
+    </Menu>
+
+
+    </Grid>
+</Window>
